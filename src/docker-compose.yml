@@ -19,7 +19,7 @@ services:
       start_period: 5s
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whats-up-docker-router.rule=Host(`${WUD_DOMAIN:?err}`)"
+      - "traefik.http.routers.whats-up-docker-router.rule=Host(`wud.intranet.xbhl.online`)"
       - "traefik.http.routers.whats-up-docker-router.entrypoints=websecure"
       - "traefik.http.routers.whats-up-docker-router.tls=true"
       - "traefik.http.routers.whats-up-docker-router.service=whats-up-docker"
