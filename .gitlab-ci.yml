@@ -12,3 +12,8 @@ include:
       cloudflare-dns-api-token: $CLOUDFLARE_DNS_API_TOKEN
       cloudflare-dns-strategy: "direct"
       delete-existing-container-files: true
+
+setup:generate-build-artifacts:
+  script:
+    - cp -r src/envs $BUILD_ARTIFACTS_DIR/
+    - sed -i "s|^WUD_AUTH_OIDC_AUTHELIA_CLIENTSECRET=.*|WUD_AUTH_OIDC_AUTHELIA_CLIENTSECRET=${WUD_OAUTH_CLIENT_SECRET}|" $BUILD_ARTIFACTS_DIR/envs/auth/authelia.env
