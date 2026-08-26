@@ -1,0 +1,39 @@
+services:
+  whats-up-docker:
+    image: ghcr.io/getwud/wud:8.3.1
+    container_name: whats-up-docker
+    hostname: whats-up-docker.ctr.xbhl.intranet
+    environment:
+      TZ: Europe/Warsaw
+      WUD_LOG_LEVEL: INFO
+      WUD_WATCHER_LOCAL_SOCKET: /var/run/docker.sock
+      WUD_WATCHER_LOCAL_WATCHALL: "false"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - store:/store
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --spider http://127.0.0.1:3000/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whats-up-docker-router.rule=Host(`${WUD_DOMAIN:?err}`)"
+      - "traefik.http.routers.whats-up-docker-router.entrypoints=websecure"
+      - "traefik.http.routers.whats-up-docker-router.tls=true"
+      - "traefik.http.routers.whats-up-docker-router.service=whats-up-docker"
+      - "traefik.http.services.whats-up-docker.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+volumes:
+  store:
+
+networks:
+  proxy:
+    external: true
