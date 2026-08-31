@@ -17,6 +17,7 @@ services:
       - envs/watchers/dns.vm.xbhl.intranet.env
       - envs/watchers/ha.vm.xbhl.intranet.env
       - envs/watchers/media.vm.xbhl.intranet.env
+      - envs/watchers/nas.srv.xbhl.intranet.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - store:/store
