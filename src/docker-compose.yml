@@ -8,12 +8,18 @@ services:
       WUD_LOG_LEVEL: INFO
     env_file:
       - envs/auth/authelia.env
-      - envs/watchers/local.env
+      # watchers
+      - envs/watchers/infrastructure.vm.xbhl.intranet.env
+      - envs/watchers/cloud.vm.xbhl.intranet.env
+      - envs/watchers/code.vm.xbhl.intranet.env
+      - envs/watchers/dns.vm.xbhl.intranet.env
+      - envs/watchers/ha.vm.xbhl.intranet.env
+      - envs/watchers/media.vm.xbhl.intranet.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - store:/store
     healthcheck:
-      test: ["CMD-SHELL", "wget --quiet --spider http://127.0.0.1:3000/health || exit 1"]
+      test: [ "CMD-SHELL", "wget --quiet --spider http://127.0.0.1:3000/health || exit 1" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -26,6 +32,9 @@ services:
       - "traefik.http.routers.whats-up-docker-router.service=whats-up-docker"
       - "traefik.http.services.whats-up-docker.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+      - 'wud.watch=true'
+      - 'wud.tag.include=^\d+\.\d+\.\d+$$'
+      - "wud.link.template=https://github.com/getwud/wud/releases/tag/$${major}.$${minor}.$${patch}"
     networks:
       - proxy
     restart: unless-stopped
