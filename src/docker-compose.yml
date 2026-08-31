@@ -8,6 +8,8 @@ services:
       WUD_LOG_LEVEL: INFO
     env_file:
       - envs/auth/authelia.env
+      # triggers
+      - envs/triggers/smtp.env
       # watchers
       - envs/watchers/infrastructure.vm.xbhl.intranet.env
       - envs/watchers/cloud.vm.xbhl.intranet.env
