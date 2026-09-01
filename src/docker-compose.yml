@@ -10,6 +10,7 @@ services:
       - envs/auth/authelia.env
       # triggers
       - envs/triggers/smtp.env
+      - envs/triggers/discord.env
       # watchers
       - envs/watchers/infrastructure.vm.xbhl.intranet.env
       - envs/watchers/cloud.vm.xbhl.intranet.env
