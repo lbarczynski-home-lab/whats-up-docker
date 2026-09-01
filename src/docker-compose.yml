@@ -11,6 +11,7 @@ services:
       # triggers
       - envs/triggers/smtp.env
       - envs/triggers/discord.env
+      - envs/triggers/mqtt.env
       # watchers
       - envs/watchers/infrastructure.vm.xbhl.intranet.env
       - envs/watchers/cloud.vm.xbhl.intranet.env

@@ -16,8 +16,15 @@ include:
 setup:generate-build-artifacts:
   script:
     - cp -r src/envs $BUILD_ARTIFACTS_DIR/
+    # auth
     - sed -i "s|^WUD_AUTH_OIDC_AUTHELIA_CLIENTSECRET=.*|WUD_AUTH_OIDC_AUTHELIA_CLIENTSECRET=${WUD_OAUTH_CLIENT_SECRET}|" $BUILD_ARTIFACTS_DIR/envs/auth/authelia.env
+    # discord
     - sed -i "s|^WUD_TRIGGER_DISCORD_NOTIFICATIONS_URL=.*|WUD_TRIGGER_DISCORD_NOTIFICATIONS_URL=${DISCORD_NOTIFICATIONS_CHANNEL_WEBHOOK_URL}|" $BUILD_ARTIFACTS_DIR/envs/triggers/discord.env
+    # mqtt
+    - sed -i "s|^WUD_TRIGGER_MQTT_HA_URL=.*|WUD_TRIGGER_MQTT_HA_URL=mqtt://${MQTT_HOSTNAME}|" $BUILD_ARTIFACTS_DIR/envs/triggers/mqtt.env
+    - sed -i "s|^WUD_TRIGGER_MQTT_HA_USER=.*|WUD_TRIGGER_MQTT_HA_USER=${MQTT_USERNAME}|" $BUILD_ARTIFACTS_DIR/envs/triggers/mqtt.env
+    - sed -i "s|^WUD_TRIGGER_MQTT_HA_PASSWORD=.*|WUD_TRIGGER_MQTT_HA_PASSWORD=${MQTT_PASSWORD}|" $BUILD_ARTIFACTS_DIR/envs/triggers/mqtt.env
+    # mail
     - sed -i "s|^WUD_TRIGGER_SMTP_MAIL_HOST=.*|WUD_TRIGGER_SMTP_MAIL_HOST=${SMTP_HOST}|" $BUILD_ARTIFACTS_DIR/envs/triggers/smtp.env
     - sed -i "s|^WUD_TRIGGER_SMTP_MAIL_PORT=.*|WUD_TRIGGER_SMTP_MAIL_PORT=${SMTP_PORT}|" $BUILD_ARTIFACTS_DIR/envs/triggers/smtp.env
     - sed -i "s|^WUD_TRIGGER_SMTP_MAIL_USER=.*|WUD_TRIGGER_SMTP_MAIL_USER=${SMTP_USERNAME}|" $BUILD_ARTIFACTS_DIR/envs/triggers/smtp.env
