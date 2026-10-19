@@ -1,5 +1,5 @@
 # What's Up Docker (WUD)
-### v9.3.0
+### v9.5.0
 
 Docker container update monitoring service for Home Lab infrastructure.
 
